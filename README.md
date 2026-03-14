@@ -2,6 +2,9 @@
 
 Link do Video prezentacyjnego:
 
+
+ze wzgledu na duzy rozmiar modelu llm nie moglismy go zamiesic na githubie z powodu limitu 2GB
+
 ## 🛠️ Wymagania
 
 * **JDK** (zalecana wersja 17 lub nowsza)
