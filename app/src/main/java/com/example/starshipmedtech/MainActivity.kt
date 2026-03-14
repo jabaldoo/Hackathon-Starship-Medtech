@@ -1,6 +1,7 @@
 package com.example.starshipmedtech
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -8,19 +9,26 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.starshipmedtech.databinding.ActivityMainBinding
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var photoUri: Uri? = null
 
-    // Using the key injected from .env via build.gradle
     private val GEMINI_KEY = BuildConfig.GEMINI_API_KEY
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -48,9 +55,46 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
+        setupHistory()
         checkPermissionAndOpenCamera()
 
         binding.dodajZdjecieBtn.setOnClickListener { checkPermissionAndOpenCamera() }
+        binding.menuBtn.setOnClickListener { binding.drawerLayout.openDrawer(GravityCompat.START) }
+        binding.clearHistoryBtn.setOnClickListener { clearHistory() }
+    }
+
+    private fun setupHistory() {
+        binding.historyRecyclerView.layoutManager = LinearLayoutManager(this)
+        updateHistoryList()
+    }
+
+    private fun updateHistoryList() {
+        val prefs = getSharedPreferences("MedHistory", Context.MODE_PRIVATE)
+        val historyJson = prefs.getString("diagnoses", "[]") ?: "[]"
+        val historyArray = JSONArray(historyJson)
+        
+        val historyItems = mutableListOf<Pair<String, String>>()
+        for (i in (historyArray.length() - 1) downTo 0) {
+            val entry = historyArray.getString(i)
+            val parts = entry.split(": ", limit = 2)
+            if (parts.size == 2) {
+                historyItems.add(parts[0] to parts[1])
+            }
+        }
+        
+        binding.historyRecyclerView.adapter = HistoryAdapter(historyItems) { text ->
+            binding.resultText.text = text
+            binding.resultText.visibility = View.VISIBLE
+            val level = parseLevel(text)
+            if (level != -1) showLevelImage(level) else binding.levelImage.visibility = View.GONE
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        }
+    }
+
+    private fun clearHistory() {
+        getSharedPreferences("MedHistory", Context.MODE_PRIVATE).edit().putString("diagnoses", "[]").apply()
+        updateHistoryList()
+        Toast.makeText(this, "Historia wyczyszczona", Toast.LENGTH_SHORT).show()
     }
 
     private fun checkPermissionAndOpenCamera() {
@@ -127,6 +171,10 @@ class MainActivity : AppCompatActivity() {
                     if (level != -1) {
                         showLevelImage(level)
                     }
+                    
+                    saveToHistory(text)
+                    updateHistoryList()
+                    
                 } else {
                     binding.resultText.text = "Przepraszamy za opóźnienia"
                     binding.resultText.visibility = View.VISIBLE
@@ -156,5 +204,40 @@ class MainActivity : AppCompatActivity() {
         }
         binding.levelImage.setImageResource(drawableId)
         binding.levelImage.visibility = View.VISIBLE
+    }
+
+    private fun saveToHistory(text: String) {
+        val prefs = getSharedPreferences("MedHistory", Context.MODE_PRIVATE)
+        val historyJson = prefs.getString("diagnoses", "[]") ?: "[]"
+        val historyArray = JSONArray(historyJson)
+        
+        val date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date())
+        val entry = "$date: $text"
+        
+        historyArray.put(entry)
+        prefs.edit().putString("diagnoses", historyArray.toString()).apply()
+    }
+
+    private class HistoryAdapter(private val items: List<Pair<String, String>>, private val onClick: (String) -> Unit) :
+        RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+
+        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val date: TextView = view.findViewById(R.id.historyDate)
+            val text: TextView = view.findViewById(R.id.historyText)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.history_item, parent, false)
+            return ViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val item = items[position]
+            holder.date.text = item.first
+            holder.text.text = item.second
+            holder.itemView.setOnClickListener { onClick(item.second) }
+        }
+
+        override fun getItemCount() = items.size
     }
 }
