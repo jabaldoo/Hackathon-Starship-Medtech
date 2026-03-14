@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var photoUri: Uri? = null
 
-    private val GEMINI_KEY = "AIzaSyCz5w2w3z2stZq1xnFDZoF-7120Z3IACJY"
+    // Using the key injected from .env via build.gradle
+    private val GEMINI_KEY = BuildConfig.GEMINI_API_KEY
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -68,8 +69,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun analyzeImage(uri: Uri) {
-        if (GEMINI_KEY.isBlank()) {
-            Toast.makeText(this, "API Key is missing", Toast.LENGTH_LONG).show()
+        if (GEMINI_KEY.isEmpty() || GEMINI_KEY == "null") {
+            Toast.makeText(this, "API Key is missing in .env file!", Toast.LENGTH_LONG).show()
             return
         }
 

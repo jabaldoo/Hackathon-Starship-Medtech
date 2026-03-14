@@ -2,5 +2,9 @@
     {
         "merged": "com.example.starshipmedtech.app-mergeDebugResources-31:/layout/activity_main.xml",
         "source": "com.example.starshipmedtech.app-main-34:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-mergeDebugResources-31:/layout/activity_main.xml",
+        "source": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-main-34:/layout/activity_main.xml"
     }
 ]
