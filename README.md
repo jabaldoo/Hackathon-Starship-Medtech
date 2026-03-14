@@ -2,7 +2,7 @@
 
 Link do Video prezentacyjnego:
 https://youtu.be/oUuAULoZ85c?is=nJr6-7I7VP5kCl2c
-Jesteśmy tą grupą spóźnionych przez powody techniczne.
+Film jest spóżniony z powodów technicznych.
 
 ze wzgledu na duzy rozmiar modelu llm nie moglismy go zamiesic na githubie z powodu limitu 2GB
 
