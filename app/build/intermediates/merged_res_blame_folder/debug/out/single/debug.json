@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< Updated upstream
         "merged": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-merged_res-32:/drawable_lvl4.png.flat",
         "source": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-main-34:/drawable/lvl4.png"
     },
@@ -14,12 +15,29 @@
     {
         "merged": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-merged_res-32:/drawable_lvl3.png.flat",
         "source": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-main-34:/drawable/lvl3.png"
+=======
+        "merged": "com.example.starshipmedtech.app-merged_res-32:/drawable_lvl1.png.flat",
+        "source": "com.example.starshipmedtech.app-main-34:/drawable/lvl1.png"
+    },
+    {
+        "merged": "com.example.starshipmedtech.app-merged_res-32:/drawable_ic_launcher.png.flat",
+        "source": "com.example.starshipmedtech.app-main-34:/drawable/ic_launcher.png"
+    },
+    {
+        "merged": "com.example.starshipmedtech.app-merged_res-32:/drawable_lvl4.png.flat",
+        "source": "com.example.starshipmedtech.app-main-34:/drawable/lvl4.png"
+    },
+    {
+        "merged": "com.example.starshipmedtech.app-merged_res-32:/drawable_landing.png.flat",
+        "source": "com.example.starshipmedtech.app-main-34:/drawable/landing.png"
+>>>>>>> Stashed changes
     },
     {
         "merged": "com.example.starshipmedtech.app-merged_res-32:/layout_activity_main.xml.flat",
         "source": "com.example.starshipmedtech.app-main-34:/layout/activity_main.xml"
     },
     {
+<<<<<<< Updated upstream
         "merged": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-merged_res-32:/xml_file_paths.xml.flat",
         "source": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-main-34:/xml/file_paths.xml"
     },
@@ -34,5 +52,17 @@
     {
         "merged": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-merged_res-32:/drawable_ic_launcher.png.flat",
         "source": "/Users/jabaldoo/.gradle/daemon/8.0/com.example.starshipmedtech.app-main-34:/drawable/ic_launcher.png"
+=======
+        "merged": "com.example.starshipmedtech.app-merged_res-32:/xml_file_paths.xml.flat",
+        "source": "com.example.starshipmedtech.app-main-34:/xml/file_paths.xml"
+    },
+    {
+        "merged": "com.example.starshipmedtech.app-merged_res-32:/drawable_lvl2.png.flat",
+        "source": "com.example.starshipmedtech.app-main-34:/drawable/lvl2.png"
+    },
+    {
+        "merged": "com.example.starshipmedtech.app-merged_res-32:/drawable_lvl3.png.flat",
+        "source": "com.example.starshipmedtech.app-main-34:/drawable/lvl3.png"
+>>>>>>> Stashed changes
     }
 ]

@@ -10,5 +10,9 @@ public final class BuildConfig {
   public static final int VERSION_CODE = 1;
   public static final String VERSION_NAME = "1.0";
   // Field from default config.
+<<<<<<< Updated upstream
   public static final String GEMINI_API_KEY = "AIzaSyC6knGJ47wevJXP5NRCV3q2N8zr2VW_Zq0";
+=======
+  public static final String GEMINI_API_KEY = "AIzaSyB1poIRIRqLCwKavbiYzSHJKguCUXwBMKs";
+>>>>>>> Stashed changes
 }

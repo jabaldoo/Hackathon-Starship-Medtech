@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 #Sat Mar 14 14:29:50 CET 2026
+=======
+#Sat Mar 14 14:07:34 CET 2026
+>>>>>>> Stashed changes
 base.0=/Users/jabaldoo/Developer/Github/Hackathon-Starship-Medtech/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/Users/jabaldoo/Developer/Github/Hackathon-Starship-Medtech/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.2=/Users/jabaldoo/Developer/Github/Hackathon-Starship-Medtech/app/build/intermediates/dex/debug/mergeProjectDexDebug/14/classes.dex
