@@ -30,12 +30,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var photoUri: Uri? = null
 
-<<<<<<< Updated upstream
     // Using the key injected from .env via build.gradle
     private val GEMINI_KEY = BuildConfig.GEMINI_API_KEY
-=======
-    private val GEMINI_KEY = "AIzaSyCz5w2w3z2stZq1xnFDZoF-7120Z3IACJY"
->>>>>>> Stashed changes
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -73,13 +69,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun analyzeImage(uri: Uri) {
-<<<<<<< Updated upstream
-        if (GEMINI_KEY.isEmpty() || GEMINI_KEY == "null") {
+        if (GEMINI_KEY.isNullOrBlank() || GEMINI_KEY == "null") {
             Toast.makeText(this, "API Key is missing in .env file!", Toast.LENGTH_LONG).show()
-=======
-        if (GEMINI_KEY.isBlank()) {
-            Toast.makeText(this, "API Key is missing", Toast.LENGTH_LONG).show()
->>>>>>> Stashed changes
             return
         }
 
@@ -93,10 +84,10 @@ class MainActivity : AppCompatActivity() {
             Zasady Twojej odpowiedzi:
             1. NIGDY nie stawiaj ostatecznej diagnozy. Używaj sformułowań typu: "to może sugerować", "obraz przypomina", "warto rozważyć konsultację pod kątem...".
             2. SKUPIAJ SIĘ NA ANALIZIE OBRAZU: Opisz to, co widzisz (kolor, kształt, tekstura), a następnie podaj 2-3 możliwe kierunki lub sugestie, co to może być.
-            3. BĄDŹ ZWIĘZŁY: Użytkownik potrzebuje konkretów, a nie traktatu medycznego.
-            4. OBOWIĄZKOWE ZASTRZEŻENIE: Każda Twoja odpowiedź MUSI kończyć się (lub zaczynać) wyraźnym komunikatem, że nie jesteś lekarzem, a Twoja analiza to jedynie sugestia AI, która nie zastępuje profesjonalnej porady medycznej.
+            3. BĄDŹ ZWIĘZŁY: Użytkownik potrzebuje konkretów, a nie traktatu medycznego. Unikaj używania wykrzykników (!).
+            4. OBOWIĄZKOWE ZASTRZEŻENIE: Każda Twoja odpowiedź MUSI zaczynać się wyraźnym komunikatem, że nie jesteś lekarzem, a Twoja analiza to jedynie sugestia AI, która nie zastępuje profesjonalnej porady medycznej.
             5. OMIJAJ CIĘŻSZE CHOROBY
-            6. JAK MOŻLIWE PODAWAJ ZWERYFIKOWANE RZETELNE I PRAWDZIWE ŹRÓDŁA
+            6. JAK MOŻLIWE PODAWAJ ZWERYFIKOWANE RZETELNE I PRAWDZIWE ŹRÓDŁA JAKO LINKI URL.
 
             Struktura odpowiedzi:
             - Krótki opis tego, co widzisz na zdjęciu.
@@ -105,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             - Standardowy disclaimer o braku kompetencji medycznych.
             - Na samym końcu odpowiedzi dodaj poziom zagrożenia w formacie 'LEVEL: X' gdzie X to cyfra od 1 do 4 (1 - bezpieczne, 4 - pilne).
 
-            Ton: Pomocny, empatyczny, ale profesjonalnie zdystansowany.
+            Ton: Pomocny, empatyczny, profesjonalny i wyważony.
         """.trimIndent()
 
         val model = GenerativeModel(
@@ -128,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                         })
                     }
                     
-                    val text = response.text ?: ""
+                    val text = response.text ?: "Przepraszamy za opóźnienia"
                     binding.resultText.text = text
                     binding.resultText.visibility = View.VISIBLE
                     
@@ -136,9 +127,12 @@ class MainActivity : AppCompatActivity() {
                     if (level != -1) {
                         showLevelImage(level)
                     }
+                } else {
+                    binding.resultText.text = "Przepraszamy za opóźnienia"
+                    binding.resultText.visibility = View.VISIBLE
                 }
             } catch (e: Exception) {
-                binding.resultText.text = "Error: ${e.message}"
+                binding.resultText.text = "Przepraszamy za opóźnienia\n\n(Error: ${e.message})"
                 binding.resultText.visibility = View.VISIBLE
             } finally {
                 binding.progressBar.visibility = View.GONE

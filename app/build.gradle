@@ -59,9 +59,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
 
-task copyIcon(type: Copy) {
+task copyAssets(type: Copy) {
     from "${rootProject.projectDir}/ic_launcher.png"
+    from "${rootProject.projectDir}/shutter.png"
     into "src/main/res/drawable"
 }
 
-preBuild.dependsOn(copyIcon)
+preBuild.dependsOn(copyAssets)
