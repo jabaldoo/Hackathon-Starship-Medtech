@@ -1,4 +1,4 @@
-# Hackathon-Starship-Medtech
+# Hackathon-Starship-MedScan
 
 Link do Video prezentacyjnego:
 
