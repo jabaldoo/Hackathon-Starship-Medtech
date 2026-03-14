@@ -3,6 +3,12 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def envFile = rootProject.file(".env")
+def env = new Properties()
+if (envFile.exists()) {
+    envFile.withInputStream { env.load(it) }
+}
+
 android {
     namespace 'com.example.starshipmedtech'
     compileSdk 34
@@ -15,6 +21,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        buildConfigField "String", "GEMINI_API_KEY", "\"${env.getProperty("GEMINI_API_KEY") ?: ""}\""
     }
 
     buildTypes {
@@ -30,6 +38,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
 }
 
 dependencies {
@@ -37,7 +49,19 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
+    // Updated to latest version
+    implementation 'com.google.ai.client.generativeai:generativeai:0.9.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
+
+task copyIcon(type: Copy) {
+    from "${rootProject.projectDir}/ic_launcher.png"
+    into "src/main/res/drawable"
+}
+
+preBuild.dependsOn(copyIcon)
